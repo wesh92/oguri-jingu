@@ -44,3 +44,4 @@ Below you'll also find some personal goals mixed with community suggested additi
 | :x:                | Simpler API interface for data from the MDB | ?                                                                            |
 | :x:                | Deeper search API for Horse Girls           | ?                                                                            |
 | :white_check_mark: | Modernize Asset Extraction methods          | [Link](https://github.com/wesh92/oguri-jingu/tree/main/src/asset_extraction) |
+| 👷 | Add text extractor for JP with better JSON structures | ? |
