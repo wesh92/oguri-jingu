@@ -1,6 +1,6 @@
 [tool.black]
 line-length = 124
-target-version = ['py311', 'py312', 'py313']
+target-version = ['py311', 'py312']
 
 [tool.ruff]
 extend-select = ["ANN2",
