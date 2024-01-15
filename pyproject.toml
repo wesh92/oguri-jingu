@@ -17,6 +17,9 @@ SQLAlchemy = "^2.0.25"
 psycopg2-binary = "^2.9.9"
 pandas = "^2.1.4"
 ibis-framework = {extras = ["postgres", "sqlite"], version = "^7.2.0"}
+toml = "^0.10.2"
+lz4 = "^4.3.3"
+unitypy = "^1.10.7"
 
 
 [build-system]
