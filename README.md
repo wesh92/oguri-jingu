@@ -37,10 +37,10 @@ Below you'll also find some personal goals mixed with community suggested additi
 
 ### Goals
 
-| Done?              | Goal                                        | Project Link |
-| ------------------ | ------------------------------------------- | ------------ |
-| :x:                | Add TW extraction methods                   | ?            |
-| :x:                | Add KR extraction methods                   | ?            |
-| :x:                | Simpler API interface for data from the MDB | ?            |
-| :x:                | Deeper search API for Horse Girls           | ?            |
-| :white_check_mark: | Modernize Asset Extraction methods          | none         |
+| Done?              | Goal                                        | Project Link                                                                 |
+| ------------------ | ------------------------------------------- | ---------------------------------------------------------------------------- |
+| :x:                | Add TW extraction methods                   | ?                                                                            |
+| :x:                | Add KR extraction methods                   | ?                                                                            |
+| :x:                | Simpler API interface for data from the MDB | ?                                                                            |
+| :x:                | Deeper search API for Horse Girls           | ?                                                                            |
+| :white_check_mark: | Modernize Asset Extraction methods          | [Link](https://github.com/wesh92/oguri-jingu/tree/main/src/asset_extraction) |
