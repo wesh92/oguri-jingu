@@ -1,0 +1,269 @@
+[paths]
+win_path = "~\\AppData\\LocalLow\\Cygames\\umamusume"
+master_db = "master\\master.mdb"
+meta_db = "meta"
+backup_file = "master\\master.mdb.bak"
+working_backup_file = "master\\master.mdb.bak.working"
+asset_path = "dat"
+
+[meta_tables]
+blob_table = 'a'
+blob_table_PATH = 'n'
+blob_table_HASH = 'h'
+blob_table_KIND = 'm'
+
+
+[character_data]
+main_table = "card_rarity_data"
+relation_tables = ["text_data", "skill_set", "card_data"]
+query = """
+SELECT
+	td_names.text AS name,
+	td_costume_en.text AS dress_name_en,
+	td_costume_jp.text AS dress_name_jp,
+	td_skills.text AS unique_skill_name,
+	cd.rarity AS star_level,
+	cd.speed,
+	cd.stamina,
+	cd.pow AS power,
+	cd.guts,
+	cd.wiz AS wisdom,
+	cd.max_speed,
+	cd.max_stamina,
+	cd.max_pow AS max_power,
+	cd.max_guts,
+	cd.max_wiz AS max_wisdom,
+	card.limited_chara AS is_limited_char,
+	printf("%.2f%%", card.talent_speed) AS speed_pct_increase,
+	printf("%.2f%%", card.talent_stamina) AS stamina_pct_increase,
+	printf("%.2f%%", card.talent_pow) AS power_pct_increase,
+	printf("%.2f%%", card.talent_guts) AS guts_pct_increase,
+	printf("%.2f%%", card.talent_wiz) AS wisdom_pct_increase,
+	CASE WHEN cd.proper_distance_short = 1
+			THEN "G"
+		WHEN cd.proper_distance_short = 2
+			THEN "F"
+		WHEN cd.proper_distance_short = 3
+			THEN "E"
+		WHEN cd.proper_distance_short = 4
+			THEN "D"
+		WHEN cd.proper_distance_short = 5
+			THEN "C"
+		WHEN cd.proper_distance_short = 6
+			THEN "B"
+		WHEN cd.proper_distance_short = 7
+			THEN "A"
+		WHEN cd.proper_distance_short = 8
+			THEN "S"
+		ELSE "Unknown"
+			END AS distance_short_rating,
+	CASE WHEN cd.proper_distance_mile = 1
+			THEN "G"
+		WHEN cd.proper_distance_mile = 2
+			THEN "F"
+		WHEN cd.proper_distance_mile = 3
+			THEN "E"
+		WHEN cd.proper_distance_mile = 4
+			THEN "D"
+		WHEN cd.proper_distance_mile = 5
+			THEN "C"
+		WHEN cd.proper_distance_mile = 6
+			THEN "B"
+		WHEN cd.proper_distance_mile = 7
+			THEN "A"
+		WHEN cd.proper_distance_mile = 8
+			THEN "S"
+		ELSE "Unknown"
+			END AS distance_mile_rating,
+	CASE WHEN cd.proper_distance_middle = 1
+			THEN "G"
+		WHEN cd.proper_distance_middle = 2
+			THEN "F"
+		WHEN cd.proper_distance_middle = 3
+			THEN "E"
+		WHEN cd.proper_distance_middle = 4
+			THEN "D"
+		WHEN cd.proper_distance_middle = 5
+			THEN "C"
+		WHEN cd.proper_distance_middle = 6
+			THEN "B"
+		WHEN cd.proper_distance_middle = 7
+			THEN "A"
+		WHEN cd.proper_distance_middle = 8
+			THEN "S"
+		ELSE "Unknown"
+			END AS distance_rating_middle,
+	CASE WHEN cd.proper_distance_long = 1
+			THEN "G"
+		WHEN cd.proper_distance_long = 2
+			THEN "F"
+		WHEN cd.proper_distance_long = 3
+			THEN "E"
+		WHEN cd.proper_distance_long = 4
+			THEN "D"
+		WHEN cd.proper_distance_long = 5
+			THEN "C"
+		WHEN cd.proper_distance_long = 6
+			THEN "B"
+		WHEN cd.proper_distance_long = 7
+			THEN "A"
+		WHEN cd.proper_distance_long = 8
+			THEN "S"
+		ELSE "Unknown"
+			END AS distance_long_rating,
+	CASE WHEN cd.proper_running_style_nige = 1
+			THEN "G"
+		WHEN cd.proper_running_style_nige = 2
+			THEN "F"
+		WHEN cd.proper_running_style_nige = 3
+			THEN "E"
+		WHEN cd.proper_running_style_nige = 4
+			THEN "D"
+		WHEN cd.proper_running_style_nige = 5
+			THEN "C"
+		WHEN cd.proper_running_style_nige = 6
+			THEN "B"
+		WHEN cd.proper_running_style_nige = 7
+			THEN "A"
+		WHEN cd.proper_running_style_nige = 8
+			THEN "S"
+		ELSE "Unknown"
+			END AS runner_rating,
+	CASE WHEN cd.proper_running_style_senko = 1
+			THEN "G"
+		WHEN cd.proper_running_style_senko = 2
+			THEN "F"
+		WHEN cd.proper_running_style_senko = 3
+			THEN "E"
+		WHEN cd.proper_running_style_senko = 4
+			THEN "D"
+		WHEN cd.proper_running_style_senko = 5
+			THEN "C"
+		WHEN cd.proper_running_style_senko = 6
+			THEN "B"
+		WHEN cd.proper_running_style_senko = 7
+			THEN "A"
+		WHEN cd.proper_running_style_senko = 8
+			THEN "S"
+		ELSE "Unknown"
+			END AS leader_rating,
+	CASE WHEN cd.proper_running_style_sashi = 1
+			THEN "G"
+		WHEN cd.proper_running_style_sashi = 2
+			THEN "F"
+		WHEN cd.proper_running_style_sashi = 3
+			THEN "E"
+		WHEN cd.proper_running_style_sashi = 4
+			THEN "D"
+		WHEN cd.proper_running_style_sashi = 5
+			THEN "C"
+		WHEN cd.proper_running_style_sashi = 6
+			THEN "B"
+		WHEN cd.proper_running_style_sashi = 7
+			THEN "A"
+		WHEN cd.proper_running_style_sashi = 8
+			THEN "S"
+		ELSE "Unknown"
+			END AS betweener_rating,
+	CASE WHEN cd.proper_running_style_oikomi = 1
+			THEN "G"
+		WHEN cd.proper_running_style_oikomi = 2
+			THEN "F"
+		WHEN cd.proper_running_style_oikomi = 3
+			THEN "E"
+		WHEN cd.proper_running_style_oikomi = 4
+			THEN "D"
+		WHEN cd.proper_running_style_oikomi = 5
+			THEN "C"
+		WHEN cd.proper_running_style_oikomi = 6
+			THEN "B"
+		WHEN cd.proper_running_style_oikomi = 7
+			THEN "A"
+		WHEN cd.proper_running_style_oikomi = 8
+			THEN "S"
+		ELSE "Unknown"
+			END AS chaser_rating,
+	CASE WHEN cd.proper_ground_turf = 1
+			THEN "G"
+		WHEN cd.proper_ground_turf = 2
+			THEN "F"
+		WHEN cd.proper_ground_turf = 3
+			THEN "E"
+		WHEN cd.proper_ground_turf = 4
+			THEN "D"
+		WHEN cd.proper_ground_turf = 5
+			THEN "C"
+		WHEN cd.proper_ground_turf = 6
+			THEN "B"
+		WHEN cd.proper_ground_turf = 7
+			THEN "A"
+		WHEN cd.proper_ground_turf = 8
+			THEN "S"
+		ELSE "Unknown"
+			END AS turf_rating,
+	CASE WHEN cd.proper_ground_dirt = 1
+			THEN "G"
+		WHEN cd.proper_ground_dirt = 2
+			THEN "F"
+		WHEN cd.proper_ground_dirt = 3
+			THEN "E"
+		WHEN cd.proper_ground_dirt = 4
+			THEN "D"
+		WHEN cd.proper_ground_dirt = 5
+			THEN "C"
+		WHEN cd.proper_ground_dirt = 6
+			THEN "B"
+		WHEN cd.proper_ground_dirt = 7
+			THEN "A"
+		WHEN cd.proper_ground_dirt = 8
+			THEN "S"
+		ELSE "Unknown"
+			END AS dirt_rating
+FROM card_rarity_data cd
+	LEFT JOIN text_data td_names
+		ON SUBSTR(cd.card_id, 1, 4) = td_names.`index`
+		AND td_names.id = 6
+		AND td_names.category = 6
+	LEFT JOIN text_data td_costume_en
+		ON cd.card_id = td_costume_en.`index`
+		AND td_costume_en.id = 5
+		AND td_costume_en.category = 5
+	LEFT JOIN text_data td_costume_jp
+		ON cd.get_dress_id_2 = td_costume_jp.`index`
+		AND td_costume_jp.id = 14
+		AND td_costume_jp.category = 14
+	LEFT JOIN skill_set sk
+		ON cd.skill_set = sk.id
+	LEFT JOIN text_data td_skills
+		ON sk.skill_id1 = td_skills.`index`
+		AND td_skills.id = 47
+		AND td_skills.category = 47
+	LEFT JOIN card_data card
+		ON cd.card_id = card.id
+"""
+note = "To fetch the document for the main character data."
+
+
+[item_data]
+main_table = "item_data"
+relation_tables = ["text_data"]
+query = """
+SELECT id AS item_id, item_category, group_concat(text, '|') AS text_group
+  FROM (
+     SELECT idat.id, idat.item_category, tdat.text
+       FROM item_data idat
+      LEFT JOIN text_data tdat
+         ON idat.id = tdat."index"
+        AND tdat.category IN (23, 24)
+  )
+GROUP BY id
+ORDER BY id;
+"""
+note = "To fetch the document for the item data."
+
+[uma_data]
+main_table = "text_data"
+query = """
+SELECT "index", text FROM text_data WHERE category = 6
+"""
+note = "To fetch the document for the character data."
