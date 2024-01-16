@@ -32,13 +32,13 @@ def get_storage_folder(folder: str) -> Path:
 def read_config() -> dict[str, Any]:
     """Reads the config file.
 
-    Path: `src/read-config.toml`
+    Path: `src_assets/read-config.toml`
 
     Returns:
         `dict[str, Any]`: The config file as a dictionary.
             Refer to the config file for the structure.
     """
-    return toml.load(r"src\asset_extraction\read-config.toml")
+    return toml.load(r"src_assets\asset_extraction\read-config.toml")
 
 
 def sqlite_connection(execution_db: str, config: dict[str, Any] = read_config()) -> Engine:
