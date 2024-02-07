@@ -99,6 +99,10 @@ SQLAlchemy = "^2.0.25"
 pandas = "^2.1.4"
 toml = "^0.10.2"
 unitypy = "^1.10.7"
+supabase = "^2.3.4"
+psycopg2-binary = "^2.9.9"
+pyarrow = ">=8"
+typer = {extras = ["all"], version = "^0.9.0"}
 
 
 [build-system]

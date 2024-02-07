@@ -4,6 +4,12 @@ master_db = "master\\master.mdb"
 backup_file = "master\\master.mdb.bak"
 working_backup_file = "master\\master.mdb.bak.working"
 
+[relevant_tables]
+query = """
+SELECT tbl_name FROM sqlite_master
+WHERE type='table' and tbl_name not like 'sqlite_%' and (tbl_name LIKE '%data%' OR tbl_name LIKE '%set%');
+"""
+
 [character_data]
 main_table = "card_rarity_data"
 relation_tables = ["text_data", "skill_set", "card_data"]
