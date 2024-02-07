@@ -14,11 +14,11 @@ Nothing will be hosted here, these are simply tools for you to explore/extract d
 
 ### Directory Breakdown
 
-`/src/` -- Main directory with subdirectories dedicated to tools and other things!
+`asset_extraction/` -- Tools for extracting things like Character Icons, Supporter Card Icons, Textures, etc.
 
-`/src/asset_extraction` -- Tools for extracting things like Character Icons, Supporter Card Icons, Textures, etc.
+`jp_text_extraction/` -- Tools for extracting Japanese Text (although at this time it isn't _specifically_ limited to extracting JP Text) from the game. Has a CLI-based tool for outputting straight to CSVs or to a Postgres Database.
 
-`/src/data/` -- When you use the `main.py` script in `asset_extraction` it will output your images in this directory.
+`data/` -- When you use the `main.py` script in `asset_extraction` or `jp_text_extraction` it will output your images/CSVs in this directory.
 
 ### Contributions
 
@@ -43,5 +43,5 @@ Below you'll also find some personal goals mixed with community suggested additi
 | :x:                | Add KR extraction methods                   | ?                                                                            |
 | :x:                | Simpler API interface for data from the MDB | ?                                                                            |
 | :x:                | Deeper search API for Horse Girls           | ?                                                                            |
-| :white_check_mark: | Modernize Asset Extraction methods          | [Link](https://github.com/wesh92/oguri-jingu/tree/main/src/asset_extraction) |
-| 👷 | Add text extractor for JP with better JSON structures | ? |
+| :white_check_mark: | Modernize Asset Extraction methods          | [Link](https://github.com/wesh92/oguri-jingu/tree/main/asset_extraction) |
+| :white_check_mark: | Add text extractor for JP to CSV/PG | [Link](https://github.com/wesh92/oguri-jingu/tree/main/jp_text_extraction)|

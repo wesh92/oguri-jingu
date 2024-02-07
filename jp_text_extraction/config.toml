@@ -1,17 +1,14 @@
 [paths]
 win_path = "~\\AppData\\LocalLow\\Cygames\\umamusume"
 master_db = "master\\master.mdb"
-meta_db = "meta"
 backup_file = "master\\master.mdb.bak"
 working_backup_file = "master\\master.mdb.bak.working"
-asset_path = "dat"
 
-[meta_tables]
-blob_table = 'a'
-blob_table_PATH = 'n'
-blob_table_HASH = 'h'
-blob_table_KIND = 'm'
-
+[relevant_tables]
+query = """
+SELECT tbl_name FROM sqlite_master
+WHERE type='table' and tbl_name not like 'sqlite_%' and (tbl_name LIKE '%data%' OR tbl_name LIKE '%set%');
+"""
 
 [character_data]
 main_table = "card_rarity_data"

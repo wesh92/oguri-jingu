@@ -1,20 +1,25 @@
+import os
+import sys
 from concurrent.futures import ThreadPoolExecutor
 from logging import CRITICAL, INFO, getLogger
 
 import oguri_interface
 import oguri_processing
-import oguri_utils
 import UnityPy
 from models.meta_model import MetaModel
 
-EXTERNAL_CONFIG = oguri_utils.read_config()
-ENGINE = oguri_utils.sqlite_connection("meta_db", EXTERNAL_CONFIG)
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+import utils.oguri_utils as oguri_utils
+
+EXTERNAL_CONFIG = oguri_utils.read_config(r"asset_extraction\read-config.toml")
+ENGINE = oguri_utils.sqlite_connection("meta_db", config=EXTERNAL_CONFIG)
 SKIP_EXISTING = True
 DATA_ROOT = oguri_utils.get_storage_folder("meta")
 
 
 def extract_blob_to_list(blob_name: str | None = None) -> list:
-    return oguri_utils.extract_blob_info(blob_name, ENGINE).to_struct().to_list()
+    return oguri_utils.extract_blob_info(blob_name, ENGINE, EXTERNAL_CONFIG).to_struct().to_list()
 
 
 def create_models(db_list: list) -> list:

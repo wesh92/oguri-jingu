@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 # All of the meta images I'm not taking the fall for something copyrighted
-src/data/**/*.png
+data/**/*.png
