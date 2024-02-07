@@ -29,19 +29,19 @@ def get_storage_folder(folder: str) -> Path:
     return path
 
 
-def read_config() -> dict[str, Any]:
+def read_config(toml_path: str) -> dict[str, Any]:
     """Reads the config file.
 
-    Path: `src/read-config.toml`
+    Args:
+        toml_path (`str`): The path to the config file.
 
     Returns:
         `dict[str, Any]`: The config file as a dictionary.
-            Refer to the config file for the structure.
     """
-    return toml.load(r"src\asset_extraction\read-config.toml")
+    return toml.load(toml_path)
 
 
-def sqlite_connection(execution_db: str, config: dict[str, Any] = read_config()) -> Engine:
+def sqlite_connection(execution_db: str, config: dict[str, Any] | None = None) -> Engine:
     """Creates a connection to the SQLite database.
 
     Args:
@@ -74,13 +74,12 @@ def read_database(query: str, conn: Engine) -> pl.DataFrame:
     return pl.read_database(query, conn)
 
 
-def extract_blob_info(kind: str | None = None, engine: Engine = None) -> pl.DataFrame:
+def extract_blob_info(kind: str | None = None, engine: Engine = None, config: dict[str, Any] | None = None) -> pl.DataFrame:
     """Extracts the meta blob information from the database.
 
     Returns:
         `pl.DataFrame`: The meta information from the database.
     """
-    config = read_config()
     if kind is not None:
         query = f"""
         SELECT {config['meta_tables']['blob_table_PATH']},
