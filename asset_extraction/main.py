@@ -12,7 +12,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import utils.oguri_utils as oguri_utils
 
-EXTERNAL_CONFIG = oguri_utils.read_config(r"asset_extraction\read-config.toml")
+EXTERNAL_CONFIG = oguri_utils.read_config(r".\read-config.toml")
 ENGINE = oguri_utils.sqlite_connection("meta_db", config=EXTERNAL_CONFIG)
 SKIP_EXISTING = True
 DATA_ROOT = oguri_utils.get_storage_folder("meta")
