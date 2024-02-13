@@ -1,9 +1,8 @@
 [paths]
-win_path = "~\\AppData\\LocalLow\\Cygames\\umamusume"
-master_db = "master\\master.mdb"
+win_path_jp = "~\\AppData\\LocalLow\\Cygames\\umamusume"
+win_path_ko = "~\\AppData\\LocalLow\\umamusume_ko"
+win_path_tw = "~\\AppData\\LocalLow\\umamusume_tw"
 meta_db = "meta"
-backup_file = "master\\master.mdb.bak"
-working_backup_file = "master\\master.mdb.bak.working"
 asset_path = "dat"
 
 [meta_tables]
