@@ -10,6 +10,7 @@ class MetaModel(BaseModel):
     asset_hash: str = Field(..., description="The hash of the model", alias="h")
     meta_group: str = Field(..., description="The meta group of the model", alias="m")
     folder_key: str | None
+    region: str
 
     # Set the folder key by getting the first 2 characters of the asset hash
     @model_validator(mode="before")

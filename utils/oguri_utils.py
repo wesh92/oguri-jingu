@@ -1,4 +1,4 @@
-from logging import DEBUG, getLogger
+from logging import DEBUG, WARNING, getLogger
 from pathlib import Path
 from typing import Any
 
@@ -41,22 +41,33 @@ def read_config(toml_path: str) -> dict[str, Any]:
     return toml.load(toml_path)
 
 
-def sqlite_connection(execution_db: str, config: dict[str, Any] | None = None) -> Engine:
+def sqlite_connection(execution_db: str, configuration: dict[str, Any] | None = None, region: str | None = None) -> Engine:
     """Creates a connection to the SQLite database.
 
     Args:
         execution_db (`str`): The name of the database to connect to.
             This is the key of the database in the config file.
             Choices: `master_db`, `meta_db`
-        config (`dict[str, Any]`): The config file as a dictionary.
+        configuration (`dict[str, Any]`): The config file as a dictionary.
             Refer to the config file for the structure.
+        region (`str`): The region of the game.
+            Choices: `JP`, `KO`, `TW`, `ZH`, default: `JP`
 
     Returns:
         `sqlite3.Connection`: The connection to the database.
     """
-    db_base_path = Path(config["paths"]["win_path"]).expanduser()
-    sqlite_db_path = str(db_base_path / config["paths"][execution_db])
-    system_logger.log(DEBUG, f"sqlite_db_path: {sqlite_db_path}")
+    if region.upper() == "JP":
+        assets_path = configuration["paths"]["win_path_jp"]
+    elif region.upper() == "KO":
+        assets_path = configuration["paths"]["win_path_ko"]
+    elif region.upper() == "TW" or region == "ZH":
+        assets_path = configuration["paths"]["win_path_tw"]
+    else:
+        NotImplementedError(f"Region {region} is not supported.")
+    db_base_path = Path(assets_path).expanduser()
+    sqlite_db_path = str(db_base_path / configuration["paths"][execution_db])
+    system_logger.log(WARNING, f"Base Path: {db_base_path}")
+    system_logger.log(WARNING, f"sqlite_db_path: {sqlite_db_path}")
     conn = create_engine("sqlite:///" + sqlite_db_path)
     return conn
 
@@ -74,7 +85,9 @@ def read_database(query: str, conn: Engine) -> pl.DataFrame:
     return pl.read_database(query, conn)
 
 
-def extract_blob_info(kind: str | None = None, engine: Engine = None, config: dict[str, Any] | None = None) -> pl.DataFrame:
+def extract_blob_info(
+    region: str, kind: str | None = None, engine: Engine = None, config: dict[str, Any] | None = None
+) -> pl.DataFrame:
     """Extracts the meta blob information from the database.
 
     Returns:
@@ -84,14 +97,16 @@ def extract_blob_info(kind: str | None = None, engine: Engine = None, config: di
         query = f"""
         SELECT {config['meta_tables']['blob_table_PATH']},
         {config['meta_tables']['blob_table_HASH']},
-        {config['meta_tables']['blob_table_KIND']}
+        {config['meta_tables']['blob_table_KIND']},
+        "{region}" AS region
         FROM {config['meta_tables']['blob_table']}
         WHERE {config['meta_tables']['blob_table_KIND']} = '{kind}';"""  # noqa: S608
     else:
         query = f"""
         SELECT {config['meta_tables']['blob_table_PATH']},
         {config['meta_tables']['blob_table_HASH']},
-        {config['meta_tables']['blob_table_KIND']}
+        {config['meta_tables']['blob_table_KIND']},
+        "{region}" AS region
         FROM {config['meta_tables']['blob_table']};"""  # noqa: S608
 
     return read_database(query, engine)
