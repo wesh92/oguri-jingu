@@ -26,10 +26,10 @@ def process_and_save_image_data(env: UnityPy.environment, model: BaseModel, root
     ```
     """
     for obj in env.objects:
-        if obj.type.name in ["Texture2D"]:
+        if obj.type.name in ["Texture2D", "Sprite"]:
             data = obj.read()
 
-            dest = root_data_folder / model.folder_key / model.asset_hash / data.name
+            dest = root_data_folder / model.region / model.meta_group / data.name
             dest.parent.mkdir(parents=True, exist_ok=True)
 
             dest = dest.with_suffix(".png")
@@ -38,9 +38,31 @@ def process_and_save_image_data(env: UnityPy.environment, model: BaseModel, root
             img.save(dest)
 
 
-def construct_full_path(model: BaseModel, configuration: dict) -> str:
+def construct_full_path(model: BaseModel, configuration: dict, region: str) -> str:
+    """
+    Constructs the full path to the asset.
+
+    Args:
+        `model` : oguri_processing.Model
+            The model containing the data to be extracted.
+        `configuration` : dict
+            The configuration file.
+        `region` : str
+            The region to use.
+            Choices: `JP`, `KO`, `TW`, `ZH`, default: `JP`
+    Returns:
+        `str`: The full path to the asset.
+    """
+    if region.upper() == "JP":
+        assets_path = configuration["paths"]["win_path_jp"]
+    elif region.upper() == "KO":
+        assets_path = configuration["paths"]["win_path_ko"]
+    elif region.upper() == "TW" or region == "ZH":
+        assets_path = configuration["paths"]["win_path_tw"]
+    else:
+        NotImplementedError(f"Region {region} is not supported.")
     return os.path.join(
-        os.path.expanduser(configuration["paths"]["win_path"]),
+        os.path.expanduser(assets_path),
         configuration["paths"]["asset_path"],
         model.folder_key,
         model.asset_hash,
