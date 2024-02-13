@@ -161,3 +161,4 @@ cython_debug/
 
 # All of the meta images I'm not taking the fall for something copyrighted
 data/**/*.png
+**secrets.toml
