@@ -1,5 +1,7 @@
 [paths]
-win_path = "~\\AppData\\LocalLow\\Cygames\\umamusume"
+win_path_jp = "~\\AppData\\LocalLow\\Cygames\\umamusume"
+win_path_ko = "~\\AppData\\LocalLow\\umamusume_ko"
+win_path_tw = "~\\AppData\\LocalLow\\umamusume_tw"
 master_db = "master\\master.mdb"
 backup_file = "master\\master.mdb.bak"
 working_backup_file = "master\\master.mdb.bak.working"
@@ -241,26 +243,45 @@ FROM card_rarity_data cd
 note = "To fetch the document for the main character data."
 
 
-[item_data]
-main_table = "item_data"
-relation_tables = ["text_data"]
-query = """
-SELECT id AS item_id, item_category, group_concat(text, '|') AS text_group
-  FROM (
-     SELECT idat.id, idat.item_category, tdat.text
-       FROM item_data idat
-      LEFT JOIN text_data tdat
-         ON idat.id = tdat."index"
-        AND tdat.category IN (23, 24)
-  )
-GROUP BY id
-ORDER BY id;
-"""
-note = "To fetch the document for the item data."
+[[table_relation_ids]]
+base_table = "text_data"
+search_column = "category"
+index_column = "index"
 
-[uma_data]
-main_table = "text_data"
-query = """
-SELECT "index", text FROM text_data WHERE category = 6
-"""
-note = "To fetch the document for the character data."
+[[table_relation_ids.uma_titles]]
+category = 5
+note = "To fetch the document for the character's dress name."
+
+[[table_relation_ids.uma_names]]
+category = [
+	6,77,78,170,182
+]
+note = "To fetch the document for the character's name."
+
+[[table_relation_ids.item_names]]
+category = 23
+note = "To fetch the document for the item name."
+
+[[table_relation_ids.item_description]]
+category = 24
+note = "To fetch the document for the item description."
+
+[[table_relation_ids.item_groups]]
+category = 133
+note = "To fetch the document for the item group name."
+
+[[table_relation_ids.skill_names]]
+category = 47
+special_query = "(category = 147 AND \"index\" BETWEEN 2000100 AND 3000100)"
+note = "To fetch the document for the skill name."
+
+[[table_relation_ids.skill_descriptions]]
+category = 48
+note = "To fetch the document for the skill description."
+
+[[table_relation_ids.race_names]]
+special_query = "(category IN (28,29,32,33,36,111,218) AND \"index\" BETWEEN 20000 AND 30000)"
+note = "To fetch the document for the names of all of the races."
+
+[[table_relation_ids.race_tracks]]
+category = [31,35]

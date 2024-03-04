@@ -56,7 +56,7 @@ def sqlite_connection(execution_db: str, configuration: dict[str, Any] | None = 
     Returns:
         `sqlite3.Connection`: The connection to the database.
     """
-    if region.upper() == "JP":
+    if region is None or region.upper() == "JP":
         assets_path = configuration["paths"]["win_path_jp"]
     elif region.upper() == "KO":
         assets_path = configuration["paths"]["win_path_ko"]
