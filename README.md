@@ -1,5 +1,7 @@
 # Oguri Jingu
 
+Uma Musume is coming in June 2025 to Global! As such, and since development for my part has stopped a long time ago, this repo is now archived and ***unmaintained***.
+
 <sup> オグリ-神宮 </sup>
 
 I don't have an Oguri Cap logo yet but if you find one (and I can use it) feel free to submit!
